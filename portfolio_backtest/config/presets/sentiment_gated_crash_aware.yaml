@@ -1,0 +1,36 @@
+name: "Sentiment-Gated + Crash Control"
+description: "Momentum with sentiment gating and signal switching in crashes"
+
+strategy: A
+crash_controller: signal_switch
+
+universe:
+  type: "sector_etfs"
+  symbols: [XLB, XLE, XLF, XLI, XLK, XLP, XLU, XLV, XLY, XLRE]
+  benchmark: SPY
+
+dates:
+  train_start: "2005-01-01"
+  train_end: "2018-12-31"
+  test_start: "2019-01-01"
+  test_end: "2024-12-31"
+
+params:
+  k: 3
+  momentum_lookback: 252
+  skip_recent: 21
+
+costs:
+  etf_cost_bps: 5
+  etf_borrow_bps: 25
+
+regime:
+  threshold_mode: "frozen_at_train_end"
+  persist_periods: 1
+  blend_mode: true
+
+sentiment:
+  enabled: true
+  lag_months: 1
+  high_threshold: 0.5
+  low_threshold: -0.5

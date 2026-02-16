@@ -1,0 +1,7 @@
+.cache/
+__pycache__/
+*.egg-info/
+*.pyc
+.pytest_cache/
+tearsheet.html
+runs/*.json

@@ -1,0 +1,33 @@
+name: "Sector Momentum Baseline"
+description: "Pure momentum L/S on sector ETFs, no overlays"
+
+strategy: B
+crash_controller: null
+
+universe:
+  type: "sector_etfs"
+  symbols: [XLB, XLE, XLF, XLI, XLK, XLP, XLU, XLV, XLY, XLRE]
+  benchmark: SPY
+
+dates:
+  train_start: "2005-01-01"
+  train_end: "2018-12-31"
+  test_start: "2019-01-01"
+  test_end: "2024-12-31"
+
+params:
+  k: 3
+  momentum_lookback: 252
+  skip_recent: 21
+
+costs:
+  etf_cost_bps: 5
+  etf_borrow_bps: 25
+
+regime:
+  threshold_mode: "frozen_at_train_end"
+  persist_periods: 1
+
+sentiment:
+  enabled: false
+  lag_months: 1
