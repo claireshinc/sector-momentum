@@ -58,7 +58,7 @@ def stress_test_table(
                     "Benchmark": f"{bench_total:.1%}",
                     "Excess": f"{strat_total - bench_total:.1%}",
                     "Max DD": f"{dd.min():.1%}",
-                    "Recovery (days)": recovery if recovery > 0 else "N/R",
+                    "Recovery (days)": str(recovery) if recovery > 0 else "N/R",
                 }
             )
         except Exception:

@@ -233,8 +233,15 @@ if run_button:
         prices = load_prices(symbols, start=str(train_start), end=str(test_end))
 
         sentiment = None
-        if strategy_code == "A":
+        if strategy_code in ("A", "C"):
             sentiment = load_sentiment(start=str(train_start), end=str(test_end))
+
+        short_data = None
+        if strategy_code == "C":
+            from portfolio_backtest.data.short_volume import load_finra_short_volume
+            short_data = load_finra_short_volume(
+                SECTOR_ETFS, start=str(train_start), end=str(test_end)
+            )
 
     with st.spinner("Running backtest..."):
         engine = BacktestEngine(prices, config)
@@ -246,6 +253,7 @@ if run_button:
             test_start=str(test_start),
             test_end=str(test_end),
             sentiment=sentiment,
+            short_data=short_data,
             k=k,
         )
 
