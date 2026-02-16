@@ -2,12 +2,13 @@
 
 from __future__ import annotations
 
+import tempfile
 from pathlib import Path
 
 import numpy as np
 import pandas as pd
 
-CACHE_DIR = Path(__file__).parent.parent.parent / ".cache"
+CACHE_DIR = Path(tempfile.gettempdir()) / "sector_momentum_cache"
 
 # Publication lag: UMCSENT released mid-month for prior month
 # At month-end t, we use reading from month t-1 (conservative, defensible)

@@ -3,12 +3,13 @@
 from __future__ import annotations
 
 import hashlib
+import tempfile
 from pathlib import Path
 
 import numpy as np
 import pandas as pd
 
-CACHE_DIR = Path(__file__).parent.parent.parent / ".cache"
+CACHE_DIR = Path(tempfile.gettempdir()) / "sector_momentum_cache"
 
 
 def load_finra_short_volume(

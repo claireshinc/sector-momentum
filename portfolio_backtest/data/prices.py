@@ -3,12 +3,13 @@
 from __future__ import annotations
 
 import hashlib
+import tempfile
 from pathlib import Path
 
 import pandas as pd
 import yfinance as yf
 
-CACHE_DIR = Path(__file__).parent.parent.parent / ".cache"
+CACHE_DIR = Path(tempfile.gettempdir()) / "sector_momentum_cache"
 
 
 def _cache_key(symbols: list[str], start: str, end: str) -> str:
