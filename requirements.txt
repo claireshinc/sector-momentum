@@ -11,3 +11,4 @@ quantstats>=0.0.62
 pyarrow>=14.0
 pytest>=7.4
 pandas_market_calendars>=4.3
+.
