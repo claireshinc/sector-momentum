@@ -277,6 +277,7 @@ if run_button:
     st.session_state["engine"] = engine
     st.session_state["prices"] = prices
     st.session_state["sentiment"] = sentiment
+    st.session_state["short_data"] = short_data
     st.session_state["config_dict"] = {
         "strategy": strategy_code,
         "crash_controller": crash_controller,
@@ -354,6 +355,7 @@ if "result" in st.session_state:
             if st.button("Run Counterfactual Comparison"):
                 counterfactual_results = {}
                 sentiment = st.session_state.get("sentiment")
+                short_data = st.session_state.get("short_data")
 
                 with st.spinner("Running counterfactual backtests..."):
                     for ctrl in [None, "panic_throttle", "signal_switch", "vol_target"]:
@@ -365,6 +367,7 @@ if "result" in st.session_state:
                             test_start=str(test_start),
                             test_end=str(test_end),
                             sentiment=sentiment,
+                            short_data=short_data,
                             k=k,
                         )
                         counterfactual_results[ctrl] = res
