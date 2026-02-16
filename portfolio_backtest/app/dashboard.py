@@ -230,7 +230,16 @@ with st.expander("Backtest Integrity Checklist"):
 if run_button:
     with st.spinner("Loading data..."):
         symbols = SECTOR_ETFS + ["SPY"]
-        prices = load_prices(symbols, start=str(train_start), end=str(test_end))
+        try:
+            prices = load_prices(symbols, start=str(train_start), end=str(test_end))
+        except Exception as e:
+            st.error(f"Failed to load prices: {e}")
+            st.stop()
+
+        st.caption(
+            f"Loaded {prices.shape[0]} days x {prices.shape[1]} symbols "
+            f"({prices.index.min().date()} to {prices.index.max().date()})"
+        )
 
         sentiment = None
         if strategy_code in ("A", "C"):
@@ -255,6 +264,13 @@ if run_button:
             sentiment=sentiment,
             short_data=short_data,
             k=k,
+        )
+
+    if not result.metrics:
+        st.error(
+            f"Backtest returned no results. "
+            f"Rebalance dates: {len(result.weights)}, "
+            f"Net return days: {len(result.returns_net)}"
         )
 
     st.session_state["result"] = result

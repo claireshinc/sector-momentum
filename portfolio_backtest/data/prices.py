@@ -51,10 +51,19 @@ def load_prices(
         end=end,
         auto_adjust=True,
         progress=False,
+        group_by="ticker",
     )
 
+    if data.empty:
+        raise ValueError(f"yfinance returned no data for {symbols} ({start} to {end})")
+
+    # Handle different yfinance column structures
     if isinstance(data.columns, pd.MultiIndex):
-        prices = data["Close"]
+        # group_by="ticker" gives (Symbol, OHLCV) MultiIndex
+        prices = pd.DataFrame()
+        for sym in symbols:
+            if sym in data.columns.get_level_values(0):
+                prices[sym] = data[sym]["Close"]
     else:
         # Single symbol case
         prices = data[["Close"]].rename(columns={"Close": symbols[0]})
